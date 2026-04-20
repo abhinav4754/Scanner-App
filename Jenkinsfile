@@ -5,15 +5,11 @@ pipeline {
         nodejs "node18"
     }
 
-    environment {
-        OPENSSL_CONF = ""
-    }
-
     stages {
 
         stage('Build') {
             steps {
-                bat 'cd backend && npm install'
+                bat 'set OPENSSL_CONF= && cd backend && npm install'
                 bat 'docker build -t scanner-app .'
             }
         }
