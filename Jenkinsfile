@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         nodejs "node18"
+        sonarQubeScanner "sonar-scanner"
     }
 
     environment {
@@ -26,7 +27,9 @@ pipeline {
 
         stage('Code Quality') {
             steps {
-                bat 'sonar-scanner'
+                withSonarQubeEnv('SonarQube') {
+                    bat "\"${tool 'sonar-scanner'}\\bin\\sonar-scanner.bat\""
+                }
             }
         }
 
