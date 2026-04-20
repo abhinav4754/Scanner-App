@@ -5,11 +5,15 @@ pipeline {
         nodejs "node18"
     }
 
+    environment {
+        OPENSSL_CONF = "C:\\ProgramData\\Jenkins\\.jenkins\\openssl.cnf"
+    }
+
     stages {
 
         stage('Build') {
             steps {
-                bat 'set OPENSSL_CONF=C:\\ProgramData\\Jenkins\\.jenkins\\openssl.cnf && cd backend && npm install'
+                bat 'cd backend && npm install'
                 bat 'docker build -t scanner-app .'
             }
         }
