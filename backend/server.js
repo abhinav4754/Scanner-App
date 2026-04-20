@@ -6,7 +6,6 @@ const path = require("path");
 require("dotenv").config();
 
 const app = express();
-const PORT = 3000;
 
 // Middleware
 app.use(cors());
@@ -31,7 +30,8 @@ app.get('/health', (req, res) => {
 	res.send("OK");
 });
 
-// Start server without database
-app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(3000, () => console.log("Server running"));
+}
+
+module.exports = app;
