@@ -9,47 +9,45 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'cd backend && npm install'
-                sh 'docker build -t scanner-app .'
+                bat 'cd backend && npm install'
+                bat 'docker build -t scanner-app .'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'cd backend && npm test'
+                bat 'cd backend && npm test'
             }
         }
 
         stage('Code Quality') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'sonar-scanner'
-                }
+                bat 'sonar-scanner'
             }
         }
 
         stage('Security') {
             steps {
-                sh 'cd backend && npm audit || true'
+                bat 'cd backend && npm audit'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker rm -f scanner-container || true'
-                sh 'docker run -d -p 3000:3000 --name scanner-container scanner-app'
+                bat 'docker rm -f scanner-container || exit 0'
+                bat 'docker run -d -p 3000:3000 --name scanner-container scanner-app'
             }
         }
 
         stage('Release') {
             steps {
-                sh 'echo "Release completed"'
+                bat 'echo Release completed'
             }
         }
 
         stage('Monitoring') {
             steps {
-                sh 'curl http://localhost:3000/health'
+                bat 'curl http://localhost:3000/health'
             }
         }
     }
