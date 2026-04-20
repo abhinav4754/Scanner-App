@@ -9,7 +9,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'set OPENSSL_CONF= && cd backend && npm install'
+                bat 'set OPENSSL_CONF=C:\\ProgramData\\Jenkins\\.jenkins\\openssl.cnf && cd backend && npm install'
                 bat 'docker build -t scanner-app .'
             }
         }
