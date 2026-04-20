@@ -5,6 +5,10 @@ pipeline {
         nodejs "node18"
     }
 
+    environment {
+        OPENSSL_CONF = ""
+    }
+
     stages {
 
         stage('Build') {
